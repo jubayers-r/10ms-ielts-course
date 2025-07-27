@@ -1,3 +1,7 @@
+/**
+ * Data structure returned by getProduct().
+ */
+
 type HTMLString = string;
 
 export type Seo = any[];
