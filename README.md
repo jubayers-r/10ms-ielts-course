@@ -1,5 +1,45 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+###Folder Stucture
+
+```
+/10ms-ielts-course/
+├── public/
+├── app/
+│   ├── layout.tsx                # Root layout (wraps whole app)
+│   ├── globals.css               # Global styles import here
+│   ├── page.tsx                  # (Optional) root page (e.g. redirect to /product/en)
+│   ├── [lang]/
+│   │   ├── product/
+│   │   │   ├── layout.tsx        # Layout for /product routes (header, footer)
+│   │   │   ├── page.tsx          # Main product page for /product/en or /product/bn
+│   │   │   ├── components/       # Product page–specific components (optional)
+│   │   │   │   ├── TitleSection.tsx
+│   │   │   │   ├── Description.tsx
+│   │   │   │   ├── Instructors.tsx
+│   │   │   │   ├── CourseTrailer.tsx
+│   │   │   │   ├── Features.tsx
+│   │   │   │   ├── Pointers.tsx
+│   │   │   │   ├── AboutCourse.tsx
+│   │   │   │   ├── Checklist.tsx
+│   │   │   │   ├── CTA.tsx
+│   │   │   │   └── SEOHead.tsx
+│   │   │   ├── types.ts            # Type definitions from API
+│   │   │   └── (other components or files as needed)
+│   │   └── LanguageToggle.tsx    # Language toggle component (shared under product)
+│   └── components/               # Shared UI components across app (Header.tsx, Footer.tsx, Layout.tsx)
+│       ├── UI
+│       ├── Header.tsx
+│       └── Footer.tsx
+├── lib/
+│   └── api.ts                    # axios instance with headers and fetch logic
+├── styles/
+│   └── globals.css               # Tailwind globals, import here or in app/layout.tsx
+├── Dockerfile
+│
+
+```
+
 ## Getting Started
 
 First, run the development server:
