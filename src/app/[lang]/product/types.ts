@@ -22,16 +22,16 @@ export interface CtaText {
   name: string;
   value: string;
 }
-export interface SectionValue {
-  background_color: string;
-  background_img: string;
-  checklist_text_color: string;
-  end_at: string; // ISO date string
-  id: string;
-  start_at: string; // ISO date string
-  template: string;
-  text: string;
-}
+// export interface SectionValue {
+//   background_color: string;
+//   background_img: string;
+//   checklist_text_color: string;
+//   end_at: string; // ISO date string
+//   id: string;
+//   start_at: string; // ISO date string
+//   template: string;
+//   text: string;
+// }
 
 export interface Section {
   type: string;
@@ -39,7 +39,7 @@ export interface Section {
   description: string;
   bg_color: string;
   order_idx: number;
-  values: SectionValue[];
+  values: any;
 }
 
 export interface Data {

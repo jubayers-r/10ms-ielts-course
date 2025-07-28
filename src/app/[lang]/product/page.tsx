@@ -20,6 +20,7 @@ import CustomYouTubePlayer from "./components/Header/CustomYouTubePlayer";
 import CTA from "./components/Header/CTA";
 import Checklist from "./components/Header/Checklist";
 import CourseTabs from "./components/CourseTabs";
+import InstructorCard from "./components/InstructorCard";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -27,7 +28,9 @@ export const dynamic = "force-dynamic"; // for SSR
 export default async function ProductPage() {
   // Fetch course product data for Bengali locale
   const data: Data = await getProduct("bn");
-
+  const { name } = data.sections.find(
+    (section) => section.type === "instructors"
+  ) ?? { name: "Instructors" }; // fallback default
 
   return (
     <div className="relative font-bengali">
@@ -44,7 +47,7 @@ export default async function ProductPage() {
           />
           {/*  Trailer + CTA + Checklists from medium screens*/}
           <div className="hidden md:block mt-20">
-            <div className="relative bg-white p-1 shadow">
+            <div className="relative bg-white p-1 shadow ">
               <CustomYouTubePlayer />
 
               {/* These 2 will now pop below the card */}
@@ -58,10 +61,25 @@ export default async function ProductPage() {
           </div>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto grid grid-cols-3 ">
+      <main className="max-w-6xl mx-auto grid md:grid-cols-3 pt-[500px] md:pt-0">
+        {/* instructors section */}
         <div className="col-span-2">
           <CourseTabs data={data.sections} />
+          <div className="mx-5 ">
+            <h3 className="text-xl md:text-2xl font-semibold mt-7 ">{name}</h3>
+            {data.sections
+              .find((section) => section.type === "instructors")
+              ?.values?.map((instructor: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="md:mt-8 md:border md:border-gray-300 md:shadow-md md:rounded-sm"
+                >
+                  <InstructorCard instructor={instructor} />
+                </div>
+              ))}
+          </div>
         </div>
+        
       </main>
     </div>
   );
