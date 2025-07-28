@@ -1,8 +1,16 @@
 /**
- * ProductPage fetches course data and displays the course header with rating,
- * and main content. It uses server-side data fetching and separates UI concerns.
+ * Course Product Page
  *
- * Dynamic rendering is forced with `dynamic = 'force-dynamic'`.
+ * This is the main page for rendering course details. It:
+ * - Fetches course data server-side (SSR) via `getProduct`
+ * - Displays course header (title, rating, description, checklist)
+ * - Embeds a YouTube player trailer
+ * - Renders a call-to-action and checklist
+ * - Shows scrollable tabbed sections using `CourseTabs`
+ *
+ * Data structure: `Data` from `types.ts`, including `sections`, `checklist`, etc.
+ *
+ * SSR is forced with `dynamic = 'force-dynamic'`.
  */
 
 import { getProduct } from "@/lib/api";
@@ -11,6 +19,7 @@ import { Data } from "./types";
 import CustomYouTubePlayer from "./components/Header/CustomYouTubePlayer";
 import CTA from "./components/Header/CTA";
 import Checklist from "./components/Header/Checklist";
+import CourseTabs from "./components/CourseTabs";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -18,6 +27,7 @@ export const dynamic = "force-dynamic"; // for SSR
 export default async function ProductPage() {
   // Fetch course product data for Bengali locale
   const data: Data = await getProduct("bn");
+
 
   return (
     <div className="relative font-bengali">
@@ -48,7 +58,11 @@ export default async function ProductPage() {
           </div>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto ">{data.title}</main>
+      <main className="max-w-6xl mx-auto grid grid-cols-3 ">
+        <div className="col-span-2">
+          <CourseTabs data={data.sections} />
+        </div>
+      </main>
     </div>
   );
 }
