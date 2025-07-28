@@ -8,6 +8,9 @@
 import { getProduct } from "@/lib/api";
 import { HeaderContent } from "./components/Header";
 import { Data } from "./types";
+import CustomYouTubePlayer from "./components/Header/CustomYouTubePlayer";
+import CTA from "./components/Header/CTA";
+import Checklist from "./components/Header/Checklist";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -17,20 +20,35 @@ export default async function ProductPage() {
   const data: Data = await getProduct("bn");
 
   return (
-    <div className="relative">
-      <header className="bg-[url(/banner.jpeg)] min-h-[600px] md:min-h-[300px] w-full bg-cover bg-center text-white flex items-center">
+    <div className="relative font-bengali">
+      <header className="bg-[url(/banner.jpeg)] w-full bg-cover bg-center text-white flex items-center">
         {/* Container grid to layout header content in 3 columns, content spans 2 */}
-        <div className="h-full max-w-7xl mx-auto grid grid-cols-3 items-center">
+        <div className="h-full max-w-6xl mx-auto grid md:grid-cols-3 items-center">
           {/* Main course info */}
           <HeaderContent
             title={data.title}
             rating={5}
             ratingText="(81.8% শিক্ষার্থী কোর্স শেষে ৫ রেটিং দিয়েছেন)"
             descriptionHtml={data.description}
+            checklist={data.checklist}
           />
+          {/*  Trailer + CTA + Checklists from medium screens*/}
+          <div className="hidden md:block mt-20">
+            <div className="relative bg-white p-1 shadow">
+              <CustomYouTubePlayer />
+
+              {/* These 2 will now pop below the card */}
+              <div className="absolute top-full left-0 w-full p-3 bg-white border-x ">
+                <CTA />
+              </div>
+              <div className="absolute lg:top-[calc(100%+120px)] md:top-full left-0 w-full  bg-white ">
+                <Checklist data={data.checklist} />
+              </div>
+            </div>
+          </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto ">{data.title}</main>
+      <main className="max-w-6xl mx-auto ">{data.title}</main>
     </div>
   );
 }
