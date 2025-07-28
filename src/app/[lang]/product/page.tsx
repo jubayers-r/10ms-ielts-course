@@ -21,6 +21,7 @@ import CTA from "./components/Header/CTA";
 import Checklist from "./components/Header/Checklist";
 import CourseTabs from "./components/CourseTabs";
 import InstructorCard from "./components/InstructorCard";
+import FeaturesCard from "./components/FeaturesCard";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -28,9 +29,12 @@ export const dynamic = "force-dynamic"; // for SSR
 export default async function ProductPage() {
   // Fetch course product data for Bengali locale
   const data: Data = await getProduct("bn");
-  const { name } = data.sections.find(
+  const { name: instructorSectionName } = data.sections.find(
     (section) => section.type === "instructors"
   ) ?? { name: "Instructors" }; // fallback default
+  const { name: featuresSectionName } = data.sections.find(
+    (section) => section.type === "features"
+  ) ?? { name: "The way course is laid out" }; // fallback default
 
   return (
     <div className="relative font-bengali">
@@ -62,24 +66,40 @@ export default async function ProductPage() {
         </div>
       </header>
       <main className="max-w-6xl mx-auto grid md:grid-cols-3 pt-[500px] md:pt-0">
-        {/* instructors section */}
-        <div className="col-span-2">
+        <div className="col-span-2 mx-5 space-y-10">
           <CourseTabs data={data.sections} />
-          <div className="mx-5 ">
-            <h3 className="text-xl md:text-2xl font-semibold mt-7 ">{name}</h3>
+          {/* instructors section */}
+          <div>
+            <h3 className="text-xl md:text-2xl font-semibold mt-7 ">
+              {instructorSectionName}
+            </h3>
             {data.sections
               .find((section) => section.type === "instructors")
               ?.values?.map((instructor: any, idx: number) => (
                 <div
                   key={idx}
-                  className="md:mt-8 md:border md:border-gray-300 md:shadow-md md:rounded-sm"
+                  className="md:mt-3 md:border md:border-gray-300 md:shadow-md md:rounded-sm"
                 >
                   <InstructorCard instructor={instructor} />
                 </div>
               ))}
           </div>
+          {/* the way course is laid out */}
+          <div>
+            <h3 className="text-lg md:text-xl font-semibold ">
+              {featuresSectionName}
+            </h3>
+            {data.sections.find((section) => section.type === "features")
+              ?.values && (
+              <FeaturesCard
+                features={
+                  data.sections.find((section) => section.type === "features")!
+                    .values
+                }
+              />
+            )}
+          </div>
         </div>
-        
       </main>
     </div>
   );
