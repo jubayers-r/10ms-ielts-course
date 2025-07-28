@@ -23,6 +23,7 @@ import CourseTabs from "./components/CourseTabs";
 import InstructorCard from "./components/InstructorCard";
 import FeaturesCard from "./components/FeaturesCard";
 import ChecklistWithImageCard from "./components/ChecklistWithImageCard";
+import IELTSAccordion from "./components/IELTSAccordion";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -42,6 +43,10 @@ export default async function ProductPage() {
   const { name: feature_explanations_SectionName } = data.sections.find(
     (section) => section.type === "feature_explanations"
   ) ?? { name: "Course exclusive feature" }; // fallback default
+
+  const { name: aboutSectionName } = data.sections.find(
+    (section) => section.type === "about"
+  ) ?? { name: "Course Details" }; // fallback default
 
   const sampleChecklist = [
     "Lifetime access to all materials",
@@ -150,10 +155,24 @@ export default async function ProductPage() {
                 imageUrl="https://cdn.10minuteschool.com/images/k-12-courses/ielts_mock_sqr.png"
               />
             </div>
-
           </>
-
-
+          {/* course details */}
+          <>
+            <h3 className="text-lg md:text-xl font-semibold ">
+              {aboutSectionName}
+            </h3>
+            <div className=" border rounded-lg">
+              {data.sections.find((section) => section.type === "about")
+                ?.values && (
+                <IELTSAccordion
+                  data={
+                    data.sections.find((section) => section.type === "about")!
+                      .values
+                  }
+                />
+              )}
+            </div>
+          </>
         </div>
       </main>
     </div>
