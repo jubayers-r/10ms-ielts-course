@@ -1,11 +1,14 @@
+import { Check } from "lucide-react";
+
 interface FeatureValue {
-  icon: string; 
-  title: string;
-  subtitle: string;
-};
+  icon?: string;
+  title?: string;
+  subtitle?: string;
+  text?: string;
+}
 
 interface Props {
-    features: FeatureValue[]
+  features: FeatureValue[];
 }
 //   {
 //     icon: "https://s3.ap-southeast-1.amazonaws.com/cdn.10minuteschool.com/images/Group_1116604651_1684834874567.png",
@@ -29,25 +32,32 @@ interface Props {
 //   },
 // ];
 
-export default function FeaturesCard({features}: Props) {
+export default function FeaturesCard({ features }: Props) {
   return (
-    <div className="max-w-6xl mx-auto bg-[#111827] rounded-sm">
-      <div className="grid gap-6 md:grid-cols-2 ">
+    <div className="max-w-6xl mx-auto  ">
+      <div className="grid md:grid-cols-2 ">
         {features.map((feature, index) => (
-          <div
-            key={index}
-            className="flex items-start gap-4  rounded-xl shadow p-6 hover:shadow-md transition "
-          >
-            <img
-              src={feature.icon}
-              alt={feature.title}
-              className="w-10 h-10 object-contain"
-            />
+          <div key={index} className="flex items-start gap-4 p-4 ">
+            {feature.icon !== "0" ? (
+              <img
+                src={feature.icon}
+                alt={feature.title}
+                className="w-10 h-10 object-contain"
+              />
+            ) : (
+              <Check className="w-12 h-12 text-[#8aaffa]" />
+            )}
             <div>
               <h3 className="text-lg font-semibold text-white">
                 {feature.title}
               </h3>
-              <p className="text-sm text-gray-400 mt-1">{feature.subtitle}</p>
+              <p
+                className={` mt-1 ${
+                  feature.subtitle ? "text-gray-400 text-sm " : "text-black"
+                }`}
+              >
+                {feature.subtitle || feature.text}
+              </p>
             </div>
           </div>
         ))}

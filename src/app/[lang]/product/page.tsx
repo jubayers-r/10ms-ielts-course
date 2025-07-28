@@ -35,6 +35,9 @@ export default async function ProductPage() {
   const { name: featuresSectionName } = data.sections.find(
     (section) => section.type === "features"
   ) ?? { name: "The way course is laid out" }; // fallback default
+  const { name: pointersSectionName } = data.sections.find(
+    (section) => section.type === "pointers"
+  ) ?? { name: "What will you learn by doing this course" }; // fallback default
 
   return (
     <div className="relative font-bengali">
@@ -78,27 +81,48 @@ export default async function ProductPage() {
               ?.values?.map((instructor: any, idx: number) => (
                 <div
                   key={idx}
-                  className="md:mt-3 md:border md:border-gray-300 md:shadow-md md:rounded-sm"
+                  className="md:mt-3 md:border md:border-gray-300 md:rounded-sm"
                 >
                   <InstructorCard instructor={instructor} />
                 </div>
               ))}
           </div>
           {/* the way course is laid out */}
-          <div>
+          <>
             <h3 className="text-lg md:text-xl font-semibold ">
               {featuresSectionName}
             </h3>
-            {data.sections.find((section) => section.type === "features")
-              ?.values && (
-              <FeaturesCard
-                features={
-                  data.sections.find((section) => section.type === "features")!
-                    .values
-                }
-              />
-            )}
-          </div>
+            <div className="bg-[#111827] rounded-sm py-8 px-2">
+              {data.sections.find((section) => section.type === "features")
+                ?.values && (
+                <FeaturesCard
+                  features={
+                    data.sections.find(
+                      (section) => section.type === "features"
+                    )!.values
+                  }
+                />
+              )}
+            </div>
+          </>
+          {/* What will you learn by doing this course */}
+          <>
+            <h3 className="text-xl md:text-2xl font-semibold ">
+              {pointersSectionName}
+            </h3>
+            <div className=" border rounded-sm ">
+              {data.sections.find((section) => section.type === "pointers")
+                ?.values && (
+                <FeaturesCard
+                  features={
+                    data.sections.find(
+                      (section) => section.type === "pointers"
+                    )!.values
+                  }
+                />
+              )}
+            </div>
+          </>
         </div>
       </main>
     </div>
