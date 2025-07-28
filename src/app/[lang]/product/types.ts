@@ -4,7 +4,10 @@
 
 type HTMLString = string;
 
-export type Seo = any[];
+export interface Seo {
+  title?: string;
+  description?: string;
+}
 export interface Medium {
   name: string;
   resource_type: string; // e.g., "video", "image", etc.

@@ -24,13 +24,32 @@ import InstructorCard from "./components/InstructorCard";
 import FeaturesCard from "./components/FeaturesCard";
 import ChecklistWithImageCard from "./components/ChecklistWithImageCard";
 import IELTSAccordion from "./components/IELTSAccordion";
+import LocaleToggle from "../LocaleToggle";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
 
-export default async function ProductPage() {
+export default async function ProductPage({
+  params,
+}: {
+  params: { lang: "en" | "bn" };
+}) {
   // Fetch course product data for Bengali locale
-  const data: Data = await getProduct("bn");
+  let data: Data;
+  try {
+    data = await getProduct(params.lang);
+  } catch (e) {
+    if (e instanceof Error) {
+      console.log(e.message);
+    } else {
+      console.log("Unknown error", e);
+    }
+    return (
+      <div className="text-red-500 text-center p-10">
+        Failed to load product data.
+      </div>
+    ); // early return on error
+  }
   const { name: instructorSectionName } = data.sections.find(
     (section) => section.type === "instructors"
   ) ?? { name: "Instructors" }; // fallback default
@@ -50,6 +69,9 @@ export default async function ProductPage() {
 
   return (
     <div className="relative font-bengali mb-10">
+      <div className="flex w-full justify-center bg-[#030116] ">
+        <LocaleToggle />
+      </div>
       <header className="bg-[url(/banner.jpeg)] w-full bg-cover bg-center text-white flex items-center">
         {/* Container grid to layout header content in 3 columns, content spans 2 */}
         <div className="h-full max-w-6xl mx-auto grid md:grid-cols-3 items-center">
