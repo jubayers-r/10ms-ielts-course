@@ -48,15 +48,8 @@ export default async function ProductPage() {
     (section) => section.type === "about"
   ) ?? { name: "Course Details" }; // fallback default
 
-  const sampleChecklist = [
-    "Lifetime access to all materials",
-    "Instant certification after completion",
-    "Weekly doubt-clearing live sessions",
-    "Personalized progress tracking",
-  ];
-
   return (
-    <div className="relative font-bengali">
+    <div className="relative font-bengali mb-10">
       <header className="bg-[url(/banner.jpeg)] w-full bg-cover bg-center text-white flex items-center">
         {/* Container grid to layout header content in 3 columns, content spans 2 */}
         <div className="h-full max-w-6xl mx-auto grid md:grid-cols-3 items-center">
@@ -75,7 +68,7 @@ export default async function ProductPage() {
 
               {/* These 2 will now pop below the card */}
               <div className="absolute top-full left-0 w-full p-3 bg-white border-x ">
-                <CTA />
+                <CTA cta_text={data.cta_text} />
               </div>
               <div className="absolute lg:top-[calc(100%+120px)] md:top-full left-0 w-full  bg-white ">
                 <Checklist data={data.checklist} />
@@ -88,7 +81,7 @@ export default async function ProductPage() {
         <div className="col-span-2 mx-5 space-y-10">
           <CourseTabs data={data.sections} />
           {/* instructors section */}
-          <div>
+          <div id="instructors">
             <h3 className="text-xl md:text-2xl font-semibold mt-7 ">
               {instructorSectionName}
             </h3>
@@ -104,7 +97,7 @@ export default async function ProductPage() {
               ))}
           </div>
           {/* the way course is laid out */}
-          <>
+          <div id="features">
             <h3 className="text-lg md:text-xl font-semibold ">
               {featuresSectionName}
             </h3>
@@ -120,9 +113,9 @@ export default async function ProductPage() {
                 />
               )}
             </div>
-          </>
+          </div>
           {/* What will you learn by doing this course */}
-          <>
+          <div id="pointers">
             <h3 className="text-xl md:text-2xl font-semibold ">
               {pointersSectionName}
             </h3>
@@ -138,26 +131,28 @@ export default async function ProductPage() {
                 />
               )}
             </div>
-          </>
+          </div>
           {/* course exclusive features */}
-          <>
+          <div id="feature_explanations">
             <h3 className="text-lg md:text-xl font-semibold ">
               {feature_explanations_SectionName}
             </h3>
-            <div className="border p-5 rounded-sm ">
-              <ChecklistWithImageCard
-                checklist={sampleChecklist}
-                imageUrl="https://cdn.10minuteschool.com/images/k-12-courses/ielts_mock_sqr.png"
-              />
-              <hr className="border  my-5" />
-              <ChecklistWithImageCard
-                checklist={sampleChecklist}
-                imageUrl="https://cdn.10minuteschool.com/images/k-12-courses/ielts_mock_sqr.png"
-              />
+            <div className=" border rounded-lg">
+              {data.sections.find(
+                (section) => section.type === "feature_explanations"
+              )?.values && (
+                <ChecklistWithImageCard
+                  features={
+                    data.sections.find(
+                      (section) => section.type === "feature_explanations"
+                    )!.values
+                  }
+                />
+              )}
             </div>
-          </>
+          </div>
           {/* course details */}
-          <>
+          <div id="about">
             <h3 className="text-lg md:text-xl font-semibold ">
               {aboutSectionName}
             </h3>
@@ -172,7 +167,7 @@ export default async function ProductPage() {
                 />
               )}
             </div>
-          </>
+          </div>
         </div>
       </main>
     </div>

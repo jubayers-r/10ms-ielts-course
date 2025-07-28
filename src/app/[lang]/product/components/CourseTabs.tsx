@@ -92,7 +92,18 @@ export default function CourseTabs({ data }: props) {
         {data.map((section, i) => (
           <button
             key={section.order_idx}
-            onClick={() => setActiveTab(i)}
+            id={`section-${section.order_idx}`}
+            onClick={() => {
+              setActiveTab(section.order_idx);
+              const sectionType = data[i].type;
+              const target = document.getElementById(sectionType);
+              if (target) {
+                const yOffset = -80; // adjust for navbar height if needed
+                const y =
+                  target.getBoundingClientRect().top + window.scrollY + yOffset;
+                window.scrollTo({ top: y, behavior: "smooth" });
+              }
+            }}
             className={cn(
               "whitespace-nowrap border-b-2 pb-1 font-medium transition-colors text-md",
               i === activeTab

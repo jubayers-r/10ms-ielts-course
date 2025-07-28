@@ -6,7 +6,7 @@ type Props = {
 
 export default function Checklist({ data }: Props) {
   return (
-    <div className="absolute top-full left-0  p-3 space-y-2 bg-white border-x shadow w-full">
+    <div className="absolute top-full left-0  py-3 px-5 space-y-2 bg-white border-x shadow w-full">
       <p className="font-semibold text-xl mb-3 text-black">
         এই কোর্সে যা থাকছে
       </p>
