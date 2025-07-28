@@ -45,7 +45,7 @@ export default function FeaturesCard({ features }: Props) {
                 className="w-10 h-10 object-contain"
               />
             ) : (
-              <Check className="w-12 h-12 text-[#8aaffa]" />
+              <Check className="w-12 h-12 text-[#4d86f8]" />
             )}
             <div>
               <h3 className="text-lg font-semibold text-white">

@@ -22,6 +22,7 @@ import Checklist from "./components/Header/Checklist";
 import CourseTabs from "./components/CourseTabs";
 import InstructorCard from "./components/InstructorCard";
 import FeaturesCard from "./components/FeaturesCard";
+import ChecklistWithImageCard from "./components/ChecklistWithImageCard";
 
 export const dynamic = "force-dynamic"; // for SSR
 // or use export const revalidate = 3600; // for ISR
@@ -38,6 +39,16 @@ export default async function ProductPage() {
   const { name: pointersSectionName } = data.sections.find(
     (section) => section.type === "pointers"
   ) ?? { name: "What will you learn by doing this course" }; // fallback default
+  const { name: feature_explanations_SectionName } = data.sections.find(
+    (section) => section.type === "feature_explanations"
+  ) ?? { name: "Course exclusive feature" }; // fallback default
+
+  const sampleChecklist = [
+    "Lifetime access to all materials",
+    "Instant certification after completion",
+    "Weekly doubt-clearing live sessions",
+    "Personalized progress tracking",
+  ];
 
   return (
     <div className="relative font-bengali">
@@ -123,6 +134,26 @@ export default async function ProductPage() {
               )}
             </div>
           </>
+          {/* course exclusive features */}
+          <>
+            <h3 className="text-lg md:text-xl font-semibold ">
+              {feature_explanations_SectionName}
+            </h3>
+            <div className="border p-5 rounded-sm ">
+              <ChecklistWithImageCard
+                checklist={sampleChecklist}
+                imageUrl="https://cdn.10minuteschool.com/images/k-12-courses/ielts_mock_sqr.png"
+              />
+              <hr className="border  my-5" />
+              <ChecklistWithImageCard
+                checklist={sampleChecklist}
+                imageUrl="https://cdn.10minuteschool.com/images/k-12-courses/ielts_mock_sqr.png"
+              />
+            </div>
+
+          </>
+
+
         </div>
       </main>
     </div>
